@@ -4,6 +4,7 @@ import sys
 import re
 import datetime as dt
 from subprocess import call
+import time
 from pprint import pprint
 #15/02/2015, 1.Después, Almuerzo, 23:34, 116 mg/dL, , , ,
 #16/02/2015, 0.Antes, Solo glucosa, 03:19, 120 mg/dL, , , ,
@@ -118,6 +119,8 @@ def header():
 
 def footer(dias):
 
+
+	current_time = time.strftime("%d/%m/%Y %H:%M:%S")
 	total_containers = []	
 	for i in sorted(dias, reverse=True):	
 		dia =  i.replace('/','-')
@@ -134,9 +137,10 @@ def footer(dias):
 	</script>
 	</head>
 	<body>
+
 	<script src="http://code.highcharts.com/highcharts.js"></script>
 	<script src="http://code.highcharts.com/modules/exporting.js"></script>
-
+	Last update: %s
 	<div>
 		%s
 	<div>
@@ -146,7 +150,7 @@ def footer(dias):
 
 
 	</html>
-	''' % total_containers_string
+	''' % (current_time, total_containers_string)
 
 	return m
 
