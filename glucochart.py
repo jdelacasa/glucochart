@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 import csv
 import sys
+import re
 import datetime as dt
-
+from subprocess import call
 from pprint import pprint
 #15/02/2015, 1.Después, Almuerzo, 23:34, 116 mg/dL, , , ,
 #16/02/2015, 0.Antes, Solo glucosa, 03:19, 120 mg/dL, , , ,
@@ -18,11 +19,15 @@ def load_csv():
 	unidadesLenta_dict = {}
 	glucosa_dict = {}
 
-	with open('test.csv', 'rb') as csvfile:
+	matche = re.compile("^\d.*")
+	with open('tests.csv', 'rb') as csvfile:
 		spamreader = csv.reader(csvfile, delimiter=';')
 
 		for row in spamreader:
+			
 			fecha = row[0]
+			if not matche.match(fecha): continue
+
 		 	ingesta = row[1]
 			tipo_medida = row[2]
 		        hora = row[3]
@@ -205,6 +210,7 @@ def build_javascript(dia_T, rapida, hidratos, unidadesRapida, glucosa):
     $('#D%s').highcharts({
         title: {
             text: 'Glucemia %s',
+	"fontSize": "12px",
             x: -20 //center
         },
         subtitle: {
@@ -311,7 +317,7 @@ def build_javascript(dia_T, rapida, hidratos, unidadesRapida, glucosa):
             tooltip: { valueSuffix: " gr", },
             type: 'column',
             yAxis: 1,
-            //yAxis: 1,
+            color: '#00FF40',
             data: [
 			%s
 
@@ -338,6 +344,7 @@ def build_javascript(dia_T, rapida, hidratos, unidadesRapida, glucosa):
             name: 'Glucosa',
             tooltip: { valueSuffix: " mg/dL", },
             yAxis: 2,
+	    color: '#B40404',
             data: [
 			%s
                 ]
@@ -368,7 +375,17 @@ def build_javascript(dia_T, rapida, hidratos, unidadesRapida, glucosa):
 
 	return javascript	
 
+
+
+def get_csv():
+	
+	call(["./get_csv.sh"])
+
+
 if __name__ == '__main__':
+
+
+	get_csv()
 
 	print header()
 
