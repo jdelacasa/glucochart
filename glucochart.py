@@ -105,7 +105,7 @@ def header():
 	<html>
 	<head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<title> - jsFiddle demo</title>
+	<title> Gluco Chart </title>
 	<script type='text/javascript' src='//code.jquery.com/jquery-1.9.1.js'></script>
 	<link rel="stylesheet" type="text/css" href="/css/result-light.css">
 	<style type='text/css'>
@@ -221,6 +221,7 @@ def build_javascript(dia_T, rapida, hidratos, unidadesRapida, glucosa):
             text: '-----',
             x: -20
         },
+	 alignTicks: false,
         xAxis: {
             type: 'datetime',
         },
@@ -250,6 +251,9 @@ def build_javascript(dia_T, rapida, hidratos, unidadesRapida, glucosa):
         }, { // Secondary yAxis
 	    max: 60,
             min: 0,
+	    tickInterval: 2,
+            endOnTick: false,
+
             title: {
                 text: 'Hidratos de Carbono (gr)',
                 style: {
@@ -279,7 +283,28 @@ def build_javascript(dia_T, rapida, hidratos, unidadesRapida, glucosa):
                 }
             }
 
-        }],
+        }, { //Cuat y Axis
+		min: 0,
+		max: 8,
+		tickInterval: 1,
+		endOnTick: false,
+            labels: {
+                format: '{value} U',
+		
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            title: {
+                text: 'Insulina U',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            opposite: true
+
+
+	}],
         tooltip: {
             backgroundColor: 'white',
             borderWidth: 0,
@@ -287,7 +312,7 @@ def build_javascript(dia_T, rapida, hidratos, unidadesRapida, glucosa):
             headerFormat: '{point.key} ',
             pointFormat: ' | <span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b></br>',
             positioner: function () {
-                return { x: 10, y: 35 };
+		return { x: 450, y: 30 };
             },
             shadow: false
              //shared: true,
@@ -335,8 +360,8 @@ def build_javascript(dia_T, rapida, hidratos, unidadesRapida, glucosa):
         {
             name: 'UnidadesRapida',
             tooltip: { valueSuffix: " U", },
-            type: 'scatter',
-            yAxis: 0,
+            type: 'column',
+            yAxis: 3,
             borderWidth: 0.2,
             data: [
 			%s
