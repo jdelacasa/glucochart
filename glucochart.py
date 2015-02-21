@@ -215,13 +215,24 @@ def build_javascript(dia_T, rapida, hidratos, unidadesRapida, glucosa):
         title: {
             text: 'Glucemia %s',
 	"fontSize": "12px",
-            x: -20 //center
+            x: -60 //center
         },
         subtitle: {
             text: '-----',
-            x: -20
+            x: -60
         },
-	 alignTicks: false,
+	alignTicks: false,
+
+	navigation: {
+      		buttonOptions: {
+         	symbolStroke: '#DDDDDD',
+         	theme: {
+            		fill: '#505053'
+         		}
+      		}
+   	},
+
+
         xAxis: {
             type: 'datetime',
         },
